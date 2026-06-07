@@ -1,0 +1,13 @@
+{
+  "name": "EasePoet",
+  "short_name": "EasePoet",
+  "description": "Distraction-free poetry writing with word lookup, rhymes and syllable counts. Works offline.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#dc2626",
+  "icons": [
+    { "src": "Assets/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

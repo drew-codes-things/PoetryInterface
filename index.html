@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EasePoet</title>
+<meta name="description" content="EasePoet - a distraction-free poetry writing app with word lookup, rhyme finder, syllable counter, and auto-save.">
+
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://easepoet.drew-gnr.xyz/">
+<meta property="og:title"       content="EasePoet - Poetry Writing">
+<meta property="og:description" content="Distraction-free poetry writing with word lookup, rhyme finder, syllable counter, and auto-save.">
+<meta property="og:image"       content="https://easepoet.drew-gnr.xyz/Assets/logo.svg">
+
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="EasePoet - Poetry Writing">
+<meta name="twitter:description" content="Distraction-free poetry writing with word lookup, rhyme finder, syllable counter, and auto-save.">
+<meta name="twitter:image"       content="https://easepoet.drew-gnr.xyz/Assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link rel="icon" href="Assets/logo.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#dc2626">
+<link rel="stylesheet" href="Assets/style.css">
+</head>
+<body>
+<noscript>
+  <div style="background:#1e1e1e;color:#f0f0f0;font-family:sans-serif;padding:2rem;text-align:center;border-bottom:3px solid #dc2626;">
+    <strong>EasePoet requires JavaScript.</strong> Please enable JavaScript in your browser to use the app.
+  </div>
+</noscript>
+<div class="bg-blobs" aria-hidden="true"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+<div class="particles" id="particles"></div>
+<div class="site-wrapper">
+    <header class="topbar">
+        <img src="Assets/logo.svg" alt="Logo" class="topbar-logo">
+        <div class="topbar-titles">
+            <h1>EasePoet</h1>
+            <p class="header-sub">Distraction-free poetry writing</p>
+        </div>
+        <span id="saveStatus" class="save-status" aria-live="polite"></span>
+    </header>
+    <div class="main-layout">
+        <aside class="sidebar sidebar-left" role="complementary" aria-label="Word lookup">
+            <h3>Word Lookup</h3>
+            <label for="lookupInput" class="sr-only">Enter a word to look up (Ctrl+L)</label>
+            <input type="text" id="lookupInput" placeholder="Enter a word… (Ctrl+L)" aria-label="Word lookup input (Ctrl+L)">
+            <button id="lookupBtn">Search</button>
+            <div class="result" id="lookupResult" aria-live="polite"></div>
+        </aside>
+        <div class="workspace-container" id="workspaces" role="main"></div>
+        <aside class="sidebar sidebar-right" role="complementary" aria-label="Rhyme finder">
+            <h3>Rhyme Finder</h3>
+            <label for="rhymeInput" class="sr-only">Find rhymes for a word (Ctrl+R)</label>
+            <input type="text" id="rhymeInput" placeholder="Find rhymes… (Ctrl+R)" aria-label="Rhyme finder input (Ctrl+R)">
+            <button id="rhymeBtn">Search</button>
+            <div class="result" id="rhymeResult" aria-live="polite"></div>
+        </aside>
+    </div>
+</div>
+<div class="workspace-actions">
+    <button class="add-workspace-btn secondary" id="importBtn" title="Import poems (.txt or .zip)">Import</button>
+    <button class="add-workspace-btn secondary" id="exportAllBtn" title="Export all poems as a .zip">Export All</button>
+    <button class="add-workspace-btn" id="addWorkspaceBtn" title="New poem workspace (Ctrl+N)">+ New Poem</button>
+    <input type="file" id="importInput" accept=".txt,.zip" multiple hidden>
+</div>
+<script src="Assets/script.js" defer></script>
+<script>if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {})); }</script>
+</body>
+</html>

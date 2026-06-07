@@ -1,0 +1,3 @@
+# Normalise line endings to LF on commit, convert to OS-native on checkout
+* text=auto
+*.bas text eol=crlf
