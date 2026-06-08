@@ -556,7 +556,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     setInterval(autosaveAll, 30000);
 
-    document.getElementById('addWorkspaceBtn').addEventListener('click', addWorkspace);
+    document.getElementById('addWorkspaceBtn').addEventListener('click', () => addWorkspace());
 
     const exportBtn = document.getElementById('exportAllBtn');
     const importBtn = document.getElementById('importBtn');
