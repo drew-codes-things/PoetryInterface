@@ -78,6 +78,20 @@ Or visit the live version: [easepoet.drew-gnr.xyz](https://easepoet.drew-gnr.xyz
 
 ---
 
+## Get the Code
+
+Clone with git:
+
+```bash
+git clone https://github.com/drew-codes-things/PoetryInterface.git
+```
+
+Or with the [GitHub CLI](https://cli.github.com/):
+
+```bash
+gh repo clone drew-codes-things/PoetryInterface
+```
+
 ## License
 
 MIT - made by [Drew](https://github.com/drew-codes-things)
