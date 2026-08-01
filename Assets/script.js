@@ -144,8 +144,10 @@ function addWorkspace(restoredTitle, restoredContent) {
         if (addBtn) {
             const orig = addBtn.textContent;
             addBtn.textContent = '\u2713 Added';
-            addBtn.style.background = '#145a14';
-            setTimeout(() => { addBtn.textContent = orig; addBtn.style.background = ''; }, 1000);
+            addBtn.style.background = '#35d67c';
+            addBtn.style.borderColor = '#35d67c';
+            addBtn.style.color = '#07090c';
+            setTimeout(() => { addBtn.textContent = orig; addBtn.style.background = ''; addBtn.style.borderColor = ''; addBtn.style.color = ''; }, 1000);
         }
     }
 }
@@ -278,8 +280,10 @@ function savePoem(workspace) {
         document.body.appendChild(a); a.click();
         document.body.removeChild(a); URL.revokeObjectURL(url);
         btn.textContent = 'Saved!';
-        btn.style.background = '#145a14';
-        setTimeout(() => { btn.textContent = 'Save as Text'; btn.style.background = ''; btn.style.transform = ''; }, 2000);
+        btn.style.background = '#35d67c';
+        btn.style.borderColor = '#35d67c';
+        btn.style.color = '#07090c';
+        setTimeout(() => { btn.textContent = 'Save as Text'; btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = ''; btn.style.transform = ''; }, 2000);
     }, 500);
 }
 
