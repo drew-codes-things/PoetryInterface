@@ -1,6 +1,5 @@
 let workspaceCount = 0;
 
-
 const AUTOSAVE_KEY = 'easepoet_workspaces';
 
 function setSaveStatus() {
@@ -44,7 +43,6 @@ function restoreAutosave() {
     }
 }
 
-
 function createParticles() {
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const particles = document.getElementById('particles');
@@ -57,7 +55,6 @@ function createParticles() {
         particles.appendChild(p);
     }
 }
-
 
 function addWorkspace(restoredTitle, restoredContent) {
     workspaceCount++;
@@ -171,7 +168,6 @@ function deleteWorkspace(workspace) {
     }, 380);
 }
 
-
 const syllableCache = {};
 
 async function getSyllableCount(word) {
@@ -193,10 +189,14 @@ async function getSyllableCount(word) {
     }
 }
 
+const syllableUpdateIds = {};
+
 async function updateSyllableBar(wsIndex, text) {
     const countEl  = document.getElementById('syllablecount' + wsIndex);
     const detailEl = document.getElementById('syllabledetail' + wsIndex);
     if (!countEl) return;
+    const updateId = (syllableUpdateIds[wsIndex] || 0) + 1;
+    syllableUpdateIds[wsIndex] = updateId;
     const lines = text.split('\n');
     const allWords = lines.flatMap(l => l.trim().split(/\s+/).filter(Boolean));
     await Promise.all([...new Set(allWords)].map(getSyllableCount));
@@ -209,6 +209,7 @@ async function updateSyllableBar(wsIndex, text) {
         total += lineSyl;
         if (line.trim()) lineResults.push({ line: line.trim(), count: lineSyl });
     }
+    if (syllableUpdateIds[wsIndex] !== updateId) return;
     countEl.textContent = total || '-';
     detailEl.innerHTML = lineResults.map(r =>
         `<div class="syllable-line"><span class="syllable-line-text">${escapeHtml(r.line)}</span><span class="syllable-line-count">${r.count}</span></div>`
@@ -226,7 +227,6 @@ function toggleSyllableDetail(btn) {
 function escapeHtml(str) {
     return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
-
 
 function setupMediaHandlers(container) {
     let scale = 1, isDragging = false, startX, startY, translateX = 0, translateY = 0, media = null;
@@ -265,7 +265,6 @@ function setupMediaHandlers(container) {
     return { attachHandlers, setupVideoControls, resetTransform };
 }
 
-
 function savePoem(workspace) {
     const text  = workspace.querySelector('textarea').value;
     const title = workspace.querySelector('.editable-title').value.trim() || 'Untitled';
@@ -293,7 +292,6 @@ function printPoem(workspace) {
     window.print();
     setTimeout(() => workspace.classList.remove('print-target'), 1000);
 }
-
 
 async function lookupWord() {
     const word = document.getElementById('lookupInput').value.trim();
@@ -351,7 +349,6 @@ async function lookupWord() {
     }
 }
 
-
 async function findRhymes() {
     const word = document.getElementById('rhymeInput').value.trim();
     const resultDiv = document.getElementById('rhymeResult');
@@ -383,7 +380,6 @@ async function findRhymes() {
         resultDiv.innerHTML = '<p class="result-error">Unable to find rhymes. Please try again.</p>';
     }
 }
-
 
 const _crcTable = (() => {
     const t = [];
@@ -539,7 +535,6 @@ function changeBackground(event, element) {
     reader.readAsDataURL(file);
 }
 
-
 function toggleReference(button, workspace) {
     const refSection = workspace.querySelector('.reference-section');
     const isNowHidden = refSection.classList.toggle('hidden');
@@ -550,7 +545,6 @@ function attachFocusEffect(input) {
     input.addEventListener('focus', function() { if (this.parentElement) this.parentElement.style.transform = 'scale(1.005)'; });
     input.addEventListener('blur',  function() { if (this.parentElement) this.parentElement.style.transform = ''; });
 }
-
 
 document.addEventListener('DOMContentLoaded', function () {
     createParticles();
