@@ -43,19 +43,6 @@ function restoreAutosave() {
     }
 }
 
-function createParticles() {
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const particles = document.getElementById('particles');
-    for (let i = 0; i < 14; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.animationDelay  = (Math.random() * 15) + 's';
-        p.style.animationDuration = (15 + Math.random() * 10) + 's';
-        particles.appendChild(p);
-    }
-}
-
 function addWorkspace(restoredTitle, restoredContent) {
     workspaceCount++;
     const wsIndex = workspaceCount;
@@ -547,7 +534,6 @@ function attachFocusEffect(input) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    createParticles();
 
     const restored = restoreAutosave();
     if (!restored) addWorkspace();
