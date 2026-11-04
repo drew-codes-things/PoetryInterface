@@ -1,97 +1,44 @@
-<div align="center">
+# EasePoet
 
-# PoetryEaseWrite
+![Screenshot](screenshot.jpg)
 
-**A distraction-free browser app for writing poetry, with a word lookup panel, rhyme finder, syllable counter, and auto-save support.**
-
-[![HTML](https://img.shields.io/badge/html-drew?style=flat-square&logo=html5&logoColor=FFFFFF&color=E34C26)](https://html.spec.whatwg.org/)
-[![JavaScript](https://img.shields.io/badge/javascript-drew?style=flat-square&logo=javascript&logoColor=F7DF1E&color=000000)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-
-</div>
-
----
-
-EasePoet is a single-page browser tool for writing poetry without distractions. It runs entirely client-side with no install, no account, and no backend. The app is also live at [easepoet.drew-gnr.xyz](https://easepoet.drew-gnr.xyz/).
-
----
+A writing space for poems, with rhymes, definitions and syllable counts beside you. Live at <https://easepoet.drew-gnr.xyz/>.
 
 ## Features
 
-### Writing workspace
+- As many poems as you like, saved in the browser as you type
+- Line, word and syllable counts, plus a per-line syllable breakdown
+- Rhyme scheme (ABAB CDCD and so on) worked out as you type, with each rhyming pair of line endings in its own colour. It goes by spelling, so treat it as a guide
+- Syllables come from Datamuse when it's reachable and from a built-in estimator when it isn't. Results are cached so each word is only looked up once
+- Rhymes and near rhymes. Click one to put it in your poem where the cursor was
+- Dictionary look-up with meanings and examples
+- Reference image, audio or video for each poem, stored in the browser (IndexedDB, 50 MB each)
+- Download a poem as `.txt`, download them all, or print or save as PDF
+- Deleting asks first
+- Keyboard: <kbd>Alt</kbd>+<kbd>N</kbd> new poem, <kbd>Alt</kbd>+<kbd>L</kbd> look up, <kbd>Alt</kbd>+<kbd>R</kbd> rhymes, <kbd>Ctrl</kbd>+<kbd>S</kbd> download
+- Poems from the old version are moved over automatically the first time you open it
 
-- Multiple poem workspaces open at once, each in its own panel
-- Add a new workspace with the `+ New Poem` button or `Ctrl+N`
-- Syllable count updates live as you type in each workspace
+## Services
 
-### Word lookup (left sidebar)
+- Rhymes and syllables: <https://www.datamuse.com/api/>
+- Definitions: <https://dictionaryapi.dev/>
 
-- Dictionary definitions fetched on demand
-- Open with `Ctrl+L` or type directly into the search box
+Neither needs a key. Only the word you look up is sent; your poems stay in the browser.
 
-### Rhyme finder (right sidebar)
+## Files
 
-- Rhyme suggestions fetched on demand
-- Open with `Ctrl+R` or type directly into the search box
+| Path | What it is |
+| --- | --- |
+| `index.html` | The page |
+| `assets/syllables.js` | Syllable estimator and line stats, also loadable in Node |
+| `assets/rhymes.js` | Rhyme matching and rhyme scheme, also loadable in Node |
+| `assets/app.js` | Poems, tools, storage and shortcuts |
+| `assets/app.css` | Layout for this tool |
+| `assets/theme.css`, `assets/ui.js` | Shared drew-gnr.xyz look and helpers |
+| `assets/fonts/` | IBM Plex, self-hosted (SIL OFL, see `OFL.txt`) |
+| `tests/syllables.test.js` | `node tests/syllables.test.js` |
+| `tests/rhymes.test.js` | `node tests/rhymes.test.js` |
 
-### Auto-save
+## Hosting
 
-- Poem content is preserved automatically in the browser (localStorage), surviving refresh
-- A "Saved" / "Offline - saved locally" indicator in the header reflects save state
-- No manual save step required
-
-### Import / Export
-
-- **Export All** downloads every open poem as a single `.zip` (one `.txt` per poem)
-- **Import** accepts one or more `.txt` files, or a previously exported `.zip`, each becoming a new workspace
-
-### Installable (PWA)
-
-- Installable as an offline app via a web manifest and service worker - the editor works with no connection (word lookup and rhymes still need network)
-
----
-
-## Usage
-
-Open `index.html` in any modern browser and start writing. No dependencies to install.
-
-Or visit the live version: [easepoet.drew-gnr.xyz](https://easepoet.drew-gnr.xyz/)
-
----
-
-## Keyboard Shortcuts
-
-| Shortcut | Action |
-|---|---|
-| `Ctrl+N` | New poem workspace |
-| `Ctrl+L` | Focus word lookup input |
-| `Ctrl+R` | Focus rhyme finder input |
-
----
-
-## Tech
-
-- Pure HTML, CSS, and JavaScript - no frameworks or build tools
-- Fonts: [IBM Plex Sans](https://fonts.google.com/specimen/IBM+Plex+Sans) (UI) and [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono) via Google Fonts; poems are set in Georgia
-- Definitions come from [dictionaryapi.dev](https://dictionaryapi.dev/), rhymes and syllable counts from [Datamuse](https://www.datamuse.com/api/)
-- Stylesheet in `Assets/style.css`, app logic in `Assets/script.js`
-
----
-
-## Get the Code
-
-Clone with git:
-
-```bash
-git clone https://github.com/drew-codes-things/PoetryInterface.git
-```
-
-Or with the [GitHub CLI](https://cli.github.com/):
-
-```bash
-gh repo clone drew-codes-things/PoetryInterface
-```
-
-## License
-
-MIT - made by [Drew](https://github.com/drew-codes-things)
+Static files only. `CNAME` is set for GitHub Pages.

@@ -3,67 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EasePoet</title>
-<meta name="description" content="EasePoet - a distraction-free poetry writing app with word lookup, rhyme finder, syllable counter, and auto-save.">
-
-<meta property="og:type"        content="website">
-<meta property="og:url"         content="https://easepoet.drew-gnr.xyz/">
-<meta property="og:title"       content="EasePoet - Poetry Writing">
-<meta property="og:description" content="Distraction-free poetry writing with word lookup, rhyme finder, syllable counter, and auto-save.">
-<meta property="og:image"       content="https://easepoet.drew-gnr.xyz/Assets/logo.svg">
-
-<meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:title"       content="EasePoet - Poetry Writing">
-<meta name="twitter:description" content="Distraction-free poetry writing with word lookup, rhyme finder, syllable counter, and auto-save.">
-<meta name="twitter:image"       content="https://easepoet.drew-gnr.xyz/Assets/logo.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" href="Assets/logo.svg" type="image/svg+xml">
-<link rel="manifest" href="manifest.webmanifest">
+<title>EasePoet | Drew's Realm</title>
+<meta name="description" content="A quiet place to write poetry, with a dictionary, rhyme finder and syllable counter beside your words. Everything stays in your browser.">
 <meta name="theme-color" content="#0a0a0b">
-<link rel="stylesheet" href="Assets/style.css">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Drew's Realm">
+<meta property="og:title" content="EasePoet">
+<meta property="og:description" content="Write poetry with a dictionary, rhyme finder and syllable counter beside your words.">
+<meta property="og:url" content="https://easepoet.drew-gnr.xyz/">
+<link rel="canonical" href="https://easepoet.drew-gnr.xyz/">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/theme.css">
+<link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
-<noscript>
-  <div style="background:#0a0a0b;color:#ececec;font-family:sans-serif;padding:2rem;text-align:center;border-bottom:3px solid #e5383b;">
-    <strong>EasePoet requires JavaScript.</strong> Please enable JavaScript in your browser to use the app.
-  </div>
-</noscript>
-<div class="site-wrapper">
-    <header class="topbar">
-        <img src="Assets/logo.svg" alt="Logo" class="topbar-logo">
-        <div class="topbar-titles">
-            <h1>EasePoet</h1>
-            <p class="header-sub">Distraction-free poetry writing</p>
-        </div>
-        <span id="saveStatus" class="save-status" aria-live="polite"></span>
-    </header>
-    <div class="main-layout">
-        <aside class="sidebar sidebar-left" role="complementary" aria-label="Word lookup">
-            <h3>Word Lookup</h3>
-            <label for="lookupInput" class="sr-only">Enter a word to look up (Ctrl+L)</label>
-            <input type="text" id="lookupInput" placeholder="Enter a word… (Ctrl+L)" aria-label="Word lookup input (Ctrl+L)">
-            <button id="lookupBtn">Search</button>
-            <div class="result" id="lookupResult" aria-live="polite"></div>
-        </aside>
-        <div class="workspace-container" id="workspaces" role="main"></div>
-        <aside class="sidebar sidebar-right" role="complementary" aria-label="Rhyme finder">
-            <h3>Rhyme Finder</h3>
-            <label for="rhymeInput" class="sr-only">Find rhymes for a word (Ctrl+R)</label>
-            <input type="text" id="rhymeInput" placeholder="Find rhymes… (Ctrl+R)" aria-label="Rhyme finder input (Ctrl+R)">
-            <button id="rhymeBtn">Search</button>
-            <div class="result" id="rhymeResult" aria-live="polite"></div>
+<header class="topbar">
+    <a class="brand" href="https://drew-gnr.xyz/"><img class="brand-logo" src="assets/logo.svg" alt=""><span class="brand-name">Drew's Realm</span></a>
+    <span class="here">EasePoet</span>
+    <nav class="topbar-links"><a class="btn-ghost" href="https://drew-gnr.xyz/catalogue/">More tools</a></nav>
+</header>
+
+<noscript><p class="wrap" style="color:#f08a8c">EasePoet needs JavaScript switched on.</p></noscript>
+
+<main class="wrap wide">
+    <h1 class="h">EasePoet<span class="dot">.</span></h1>
+    <p class="lede">A quiet place to write. Look words up and find rhymes on the side, and click any suggestion to drop it into your poem. Poems save in this browser as you type.</p>
+
+    <div class="layout">
+        <section aria-labelledby="poems-title">
+            <h2 id="poems-title" class="sr-only">Your poems</h2>
+            <div class="poems-head">
+                <span class="count" id="poemCount"></span>
+                <button type="button" class="btn-quiet" id="downloadAll">Download all</button>
+                <button type="button" class="btn-go" id="newPoem">New poem</button>
+            </div>
+            <div id="poems"></div>
+        </section>
+
+        <aside class="tools">
+            <section class="card" aria-labelledby="lookup-title">
+                <h2 id="lookup-title">Look up a word</h2>
+                <div class="tool-form">
+                    <label class="sr-only" for="lookupInput">Word to look up</label>
+                    <input type="search" id="lookupInput" placeholder="Any word" autocomplete="off">
+                    <button type="button" class="btn-ghost" id="lookupBtn">Look up</button>
+                </div>
+                <div class="result" id="lookupResult" aria-live="polite"></div>
+            </section>
+            <section class="card" aria-labelledby="rhyme-title">
+                <h2 id="rhyme-title">Find rhymes</h2>
+                <div class="tool-form">
+                    <label class="sr-only" for="rhymeInput">Word to rhyme with</label>
+                    <input type="search" id="rhymeInput" placeholder="Rhymes with" autocomplete="off">
+                    <button type="button" class="btn-ghost" id="rhymeBtn">Find</button>
+                </div>
+                <div class="result" id="rhymeResult" aria-live="polite"></div>
+            </section>
+            <section class="card" aria-labelledby="keys-title">
+                <h2 id="keys-title">Shortcuts</h2>
+                <ul class="shortcuts">
+                    <li><span>New poem</span><span><kbd>Alt</kbd> + <kbd>N</kbd></span></li>
+                    <li><span>Look up a word</span><span><kbd>Alt</kbd> + <kbd>L</kbd></span></li>
+                    <li><span>Find rhymes</span><span><kbd>Alt</kbd> + <kbd>R</kbd></span></li>
+                    <li><span>Download this poem</span><span><kbd>Ctrl</kbd> + <kbd>S</kbd></span></li>
+                </ul>
+            </section>
         </aside>
     </div>
-</div>
-<div class="workspace-actions">
-    <button class="add-workspace-btn secondary" id="importBtn" title="Import poems (.txt or .zip)">Import</button>
-    <button class="add-workspace-btn secondary" id="exportAllBtn" title="Export all poems as a .zip">Export All</button>
-    <button class="add-workspace-btn" id="addWorkspaceBtn" title="New poem workspace (Ctrl+N)">+ New Poem</button>
-    <input type="file" id="importInput" accept=".txt,.zip" multiple hidden>
-</div>
-<script src="Assets/script.js" defer></script>
-<script>if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {})); }</script>
+</main>
+
+<footer class="foot">
+    Made by <a href="https://drew-gnr.xyz/">Drew</a><span class="sep">&middot;</span>Words from <a href="https://www.datamuse.com/api/" rel="noopener">Datamuse</a> and <a href="https://dictionaryapi.dev/" rel="noopener">Free Dictionary API</a><span class="sep">&middot;</span><a href="https://github.com/drew-codes-things/PoetryInterface">Source</a><span class="sep">&middot;</span><a href="https://drew-gnr.xyz/privacy/">Privacy</a>
+</footer>
+
+<div id="printArea"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="assets/ui.js"></script>
+<script src="assets/syllables.js"></script>
+<script src="assets/rhymes.js"></script>
+<script src="assets/app.js"></script>
 </body>
 </html>
