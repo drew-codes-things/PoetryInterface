@@ -72,9 +72,9 @@ Or visit the live version: [easepoet.drew-gnr.xyz](https://easepoet.drew-gnr.xyz
 ## Tech
 
 - Pure HTML, CSS, and JavaScript - no frameworks or build tools
-- Fonts: [Playfair Display](https://fonts.google.com/specimen/Playfair+Display) (headings) and [Montserrat](https://fonts.google.com/specimen/Montserrat) (UI) via Google Fonts
-- Particle background rendered via canvas in `Assets/script.js`
-- Stylesheet in `Assets/style.css`
+- Fonts: [IBM Plex Sans](https://fonts.google.com/specimen/IBM+Plex+Sans) (UI) and [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono) via Google Fonts; poems are set in Georgia
+- Definitions come from [dictionaryapi.dev](https://dictionaryapi.dev/), rhymes and syllable counts from [Datamuse](https://www.datamuse.com/api/)
+- Stylesheet in `Assets/style.css`, app logic in `Assets/script.js`
 
 ---
 

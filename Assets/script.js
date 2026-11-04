@@ -87,7 +87,7 @@ function addWorkspace(restoredTitle, restoredContent) {
 
     const ta = ws.querySelector('textarea');
     const titleInput = ws.querySelector('.editable-title');
-    titleInput.value = restoredTitle || 'choose your poem name';
+    titleInput.value = restoredTitle || '';
     ta.value = restoredContent || '';
     const syllableToggle = ws.querySelector('.syllable-toggle');
     const refImageEl = ws.querySelector('.reference-image');
@@ -507,19 +507,33 @@ function changeBackground(event, element) {
     const handlers = element._mediaHandlers;
     element.innerHTML = '<div class="loading">Loading media...</div>';
     handlers.resetTransform();
-    const reader = new FileReader();
-    reader.onload = function(e) {
+    if (element._mediaUrl) URL.revokeObjectURL(element._mediaUrl);
+    const mediaUrl = URL.createObjectURL(file);
+    element._mediaUrl = mediaUrl;
+    const showMedia = (node) => {
         element.innerHTML = '';
-        if (file.type.startsWith('image/')) {
-            const img = document.createElement('img'); img.src = e.target.result;
-            img.onload = () => { element.appendChild(img); handlers.attachHandlers(img); element.style.borderStyle = 'solid'; element.style.borderColor = 'var(--accent)'; };
-        } else if (file.type.startsWith('video/')) {
-            const video = document.createElement('video');
-            video.src = e.target.result; video.autoplay = true; video.loop = true; video.muted = true; video.playsInline = true; video.controls = true;
-            video.onloadeddata = () => { element.appendChild(video); handlers.attachHandlers(video); handlers.setupVideoControls(video); element.style.borderStyle = 'solid'; element.style.borderColor = 'var(--accent)'; };
-        }
+        element.appendChild(node);
+        handlers.attachHandlers(node);
+        element.style.borderStyle = 'solid';
+        element.style.borderColor = 'var(--accent)';
     };
-    reader.readAsDataURL(file);
+    const showError = () => {
+        element.innerHTML = '<span class="reference-text">That file could not be loaded. Click to try another.</span>';
+    };
+    if (file.type.startsWith('image/')) {
+        const img = document.createElement('img');
+        img.onload = () => showMedia(img);
+        img.onerror = showError;
+        img.src = mediaUrl;
+    } else if (file.type.startsWith('video/')) {
+        const video = document.createElement('video');
+        video.autoplay = true; video.loop = true; video.muted = true; video.playsInline = true; video.controls = true;
+        video.onloadeddata = () => { showMedia(video); handlers.setupVideoControls(video); };
+        video.onerror = showError;
+        video.src = mediaUrl;
+    } else {
+        showError();
+    }
 }
 
 function toggleReference(button, workspace) {
