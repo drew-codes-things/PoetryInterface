@@ -4,6 +4,7 @@
     var POEMS_KEY = 'easepoet_poems';
     var LEGACY_KEY = 'easepoet_workspaces';
     var SYLLABLE_CACHE_KEY = 'easepoet_syllables';
+    var DATAMUSE_SYLLABLES_KEY = 'easepoet_datamuse_syllables';
     var LEGACY_DEFAULT_TITLE = 'choose your poem name';
     var MAX_MEDIA_BYTES = 50 * 1024 * 1024;
     var DATAMUSE = 'https://api.datamuse.com/words';
@@ -16,6 +17,7 @@
     var rhymeInput = document.getElementById('rhymeInput');
     var rhymeResult = document.getElementById('rhymeResult');
     var printArea = document.getElementById('printArea');
+    var datamuseToggle = document.getElementById('datamuseSyllables');
 
     var poems = loadPoems();
     var activeId = poems.length ? poems[0].id : null;
@@ -23,6 +25,7 @@
     var syllableCache = ui.get(SYLLABLE_CACHE_KEY, {});
     if (!syllableCache || typeof syllableCache !== 'object') syllableCache = {};
     var pendingWords = {};
+    var askDatamuse = ui.get(DATAMUSE_SYLLABLES_KEY, false) === true;
 
     function newId() { return 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
 
@@ -198,6 +201,7 @@
     function scheduleStats(card, poem) {
         renderStats(card, poem);
         clearTimeout(statTimers[poem.id]);
+        if (!askDatamuse) return;
         statTimers[poem.id] = setTimeout(function () {
             fetchSyllables(Syllables.words(poem.content), function () {
                 var current = poems.find(function (p) { return p.id === poem.id; });
@@ -397,10 +401,20 @@
         poemsBox.textContent = '';
         poems.forEach(function (poem) { poemsBox.appendChild(buildCard(poem)); });
         countEl.textContent = poems.length === 1 ? '1 poem' : poems.length + ' poems';
+        scheduleAllStats();
+    }
+
+    function scheduleAllStats() {
         poems.forEach(function (poem) {
             var card = poemsBox.querySelector('[data-id="' + poem.id + '"]');
             if (card) scheduleStats(card, poem);
         });
+    }
+
+    function setAskDatamuse(on) {
+        askDatamuse = on;
+        ui.set(DATAMUSE_SYLLABLES_KEY, on);
+        scheduleAllStats();
     }
 
     function addPoem() {
@@ -556,6 +570,8 @@
     }
 
     document.getElementById('newPoem').addEventListener('click', addPoem);
+    datamuseToggle.checked = askDatamuse;
+    datamuseToggle.addEventListener('change', function () { setAskDatamuse(datamuseToggle.checked); });
     document.getElementById('lookupBtn').addEventListener('click', lookup);
     document.getElementById('rhymeBtn').addEventListener('click', rhymes);
     lookupInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); lookup(); } });

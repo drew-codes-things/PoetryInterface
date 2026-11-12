@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>EasePoet | Drew's Realm</title>
-<meta name="description" content="A quiet place to write poetry, with a dictionary, rhyme finder and syllable counter beside your words. Everything stays in your browser.">
+<meta name="description" content="A quiet place to write poetry, with a dictionary, rhyme finder and syllable counter beside your words. Your poems are saved in your browser.">
 <meta name="theme-color" content="#19191c">
 <meta name="color-scheme" content="dark">
 <meta property="og:type" content="website">
@@ -59,6 +59,11 @@
                     <button type="button" class="btn-ghost" id="rhymeBtn">Find</button>
                 </div>
                 <div class="result" id="rhymeResult" aria-live="polite"></div>
+            </section>
+            <section class="card" aria-labelledby="syllable-title">
+                <h2 id="syllable-title">Syllable counts</h2>
+                <label class="check"><input type="checkbox" id="datamuseSyllables"> Ask Datamuse for exact counts</label>
+                <p class="hint">Off: counts come from a built-in estimate and your poems never leave this browser. On: each word of your poems is sent to datamuse.com to be counted.</p>
             </section>
             <section class="card" aria-labelledby="keys-title">
                 <h2 id="keys-title">Shortcuts</h2>

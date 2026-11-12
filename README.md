@@ -9,7 +9,7 @@ A writing space for poems, with rhymes, definitions and syllable counts beside y
 - As many poems as you like, saved in the browser as you type
 - Line, word and syllable counts, plus a per-line syllable breakdown
 - Rhyme scheme (ABAB CDCD and so on) worked out as you type, with each rhyming pair of line endings in its own colour. It goes by spelling, so treat it as a guide
-- Syllables come from Datamuse when it's reachable and from a built-in estimator when it isn't. Results are cached so each word is only looked up once
+- Syllables come from a built-in estimator that works offline. Tick "Ask Datamuse for exact counts" to have Datamuse count them instead; it is off until you switch it on, because it sends each word of your poems to datamuse.com. Results are cached so each word is only looked up once
 - Rhymes and near rhymes. Click one to put it in your poem where the cursor was
 - Dictionary look-up with meanings and examples
 - Reference image, audio or video for each poem, stored in the browser (IndexedDB, 50 MB each)
@@ -23,7 +23,7 @@ A writing space for poems, with rhymes, definitions and syllable counts beside y
 - Rhymes and syllables: <https://www.datamuse.com/api/>
 - Definitions: <https://dictionaryapi.dev/>
 
-Neither needs a key. Only the word you look up is sent; your poems stay in the browser.
+Neither needs a key. Looking up a word or finding rhymes sends only that word. Your poems stay in the browser unless you switch on exact syllable counts, which sends each word of your poems to Datamuse.
 
 ## Files
 
