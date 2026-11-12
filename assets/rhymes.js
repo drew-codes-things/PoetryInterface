@@ -23,6 +23,10 @@
         again: 'An', been: 'En', seen: 'En', friend: 'end', break: 'Ak', great: 'At', steak: 'Ak'
     };
 
+    function exact(word) {
+        return Object.prototype.hasOwnProperty.call(EXACT, word) ? EXACT[word] : '';
+    }
+
     var LONG = { a: 'A', e: 'E', i: 'Y', o: 'O', u: 'U', y: 'Y' };
     var VOWELS = 'aeiouyAEIOUY';
 
@@ -45,8 +49,8 @@
     function rhymeKey(word) {
         var w = clean(word);
         if (!w) return '';
-        if (EXACT[w]) return EXACT[w];
-        if (w.length > 3 && /s$/.test(w) && !/(ss|us|is)$/.test(w) && EXACT[w.slice(0, -1)]) return EXACT[w.slice(0, -1)] + 'z';
+        if (exact(w)) return exact(w);
+        if (w.length > 3 && /s$/.test(w) && !/(ss|us|is)$/.test(w) && exact(w.slice(0, -1))) return exact(w.slice(0, -1)) + 'z';
         var s = phonetic(w);
         var m = s.match(new RegExp('[' + VOWELS + ']+[^' + VOWELS + ']*$'));
         return m ? m[0].replace(/S$/, 's').replace(/Z$/, 'z') : s;

@@ -23,6 +23,8 @@ for (const [a, b] of notRhyming) assert.notStrictEqual(Rhymes.rhymeKey(a), Rhyme
 assert.strictEqual(Rhymes.rhymeKey("Moon's"), Rhymes.rhymeKey('moons'));
 assert.strictEqual(Rhymes.rhymeKey('Night,'), Rhymes.rhymeKey('night'));
 assert.strictEqual(Rhymes.rhymeKey(''), '');
+assert.strictEqual(typeof Rhymes.rhymeKey('constructor'), 'string');
+assert.strictEqual(Rhymes.rhymeKey('constructors'), Rhymes.rhymeKey('instructors'));
 
 const poem = 'The kettle hums a borrowed tune,\nthe streetlight learns the shape of rain,\nand somewhere past the sleeping moon\nthe morning starts its train again.\n\nOne line alone\nand nothing more';
 const result = Rhymes.scheme(poem);

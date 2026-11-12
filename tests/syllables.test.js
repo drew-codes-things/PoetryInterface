@@ -12,6 +12,8 @@ assert.ok(misses.length <= 2, 'estimates are exact for nearly every common word,
 assert.ok(misses.every(([word, count]) => Math.abs(S.estimate(word) - count) === 1), 'and never off by more than one');
 
 assert.strictEqual(S.estimate(''), 0);
+assert.strictEqual(S.estimate('constructor'), 3);
+assert.strictEqual(S.lineStats('the constructor builds')[0].syllables, 5);
 assert.strictEqual(S.estimate('123'), 0);
 assert.deepStrictEqual(S.words("Don't  stop,\nbelievin'"), ['dont', 'stop', 'believin']);
 

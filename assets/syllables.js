@@ -14,7 +14,7 @@
     function estimate(word) {
         var w = clean(word);
         if (!w) return 0;
-        if (EXCEPTIONS[w]) return EXCEPTIONS[w];
+        if (Object.prototype.hasOwnProperty.call(EXCEPTIONS, w)) return EXCEPTIONS[w];
         if (w.length <= 3) return 1;
         var stem = w.replace(/^y/, '');
         var count = (stem.match(/[aeiouy]+/g) || []).length;
