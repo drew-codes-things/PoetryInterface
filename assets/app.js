@@ -136,7 +136,7 @@
     }
 
     function fetchSyllables(words, done) {
-        var missing = words.filter(function (w, i) { return w && words.indexOf(w) === i && typeof syllableCache[w] !== 'number' && !pendingWords[w]; }).slice(0, 40);
+        var missing = words.filter(function (w, i) { return w && words.indexOf(w) === i && typeof syllableCache[w] !== 'number' && !pendingWords[w]; });
         if (!missing.length) return;
         missing.forEach(function (w) { pendingWords[w] = true; });
         var queue = missing.slice();
