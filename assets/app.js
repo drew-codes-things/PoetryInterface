@@ -245,9 +245,17 @@
         poemsBox.querySelectorAll('.poem').forEach(function (c) { c.classList.toggle('active', c.dataset.id === id); });
     }
 
+    var mediaUrls = {};
+    function releaseMediaUrl(id) {
+        if (!mediaUrls[id]) return;
+        URL.revokeObjectURL(mediaUrls[id]);
+        delete mediaUrls[id];
+    }
+
     function renderMedia(card, poem) {
         var holder = card.querySelector('.ref-media');
         holder.textContent = '';
+        releaseMediaUrl(poem.id);
         if (!poem.hasMedia) {
             holder.appendChild(el('p', 'empty', 'No reference yet. Add an image or short video to write from.'));
             return;
@@ -260,7 +268,9 @@
                 holder.appendChild(el('p', 'empty', 'No reference yet. Add an image or short video to write from.'));
                 return;
             }
+            releaseMediaUrl(poem.id);
             var url = URL.createObjectURL(item.blob);
+            mediaUrls[poem.id] = url;
             var node;
             if (String(item.type).indexOf('video/') === 0) {
                 node = document.createElement('video');
@@ -333,6 +343,7 @@
                 if (!yes) return;
                 poems = poems.filter(function (p) { return p.id !== poem.id; });
                 if (poem.hasMedia) media.remove(poem.id).catch(function () { return null; });
+                releaseMediaUrl(poem.id);
                 if (!poems.length) poems.push(blankPoem());
                 if (activeId === poem.id) activeId = poems[0].id;
                 savePoems(true);
