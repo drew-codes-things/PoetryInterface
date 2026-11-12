@@ -23,7 +23,7 @@
         if (/[^aeiouy]e(?:ly|ful|ment|ness|less)$/.test(stem)) count -= 1;
         if (/[^aeiouy]es$/.test(stem) && !/(?:s|x|z|ch|sh|ce|ge)es$/.test(stem)) count -= 1;
         count += (stem.match(/(?:ia|io|iu|eo|oe|uo)(?=[a-z])/g) || []).length;
-        count += (stem.match(/(?<!q)ua(?=[a-z])/g) || []).length;
+        count += (stem.match(/(?:^|[^q])ua(?=[a-z])/g) || []).length;
         count += (stem.match(/[^q]ie(?=t)/g) || []).length;
         return Math.max(1, count);
     }

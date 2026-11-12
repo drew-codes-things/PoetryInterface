@@ -22,4 +22,10 @@ assert.strictEqual(lines.length, 3);
 assert.deepStrictEqual(lines.map(l => l.syllables), [3, 0, 3]);
 assert.strictEqual(lines[0].words, 3);
 
+const source = require('fs').readFileSync(require('path').join(__dirname, '../assets/syllables.js'), 'utf8');
+assert.ok(!/\(\?<[!=]/.test(source), 'no regex lookbehind: Safari before 16.4 cannot parse it and the whole script fails to load');
+assert.strictEqual(S.estimate('usual'), 3);
+assert.strictEqual(S.estimate('quarter'), 2);
+assert.strictEqual(S.estimate('uakari'), 4);
+
 console.log('syllables.test.js: all tests passed');
