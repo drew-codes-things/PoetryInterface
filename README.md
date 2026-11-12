@@ -12,7 +12,7 @@ A writing space for poems, with rhymes, definitions and syllable counts beside y
 - Syllables come from a built-in estimator that works offline. Tick "Ask Datamuse for exact counts" to have Datamuse count them instead; it is off until you switch it on, because it sends each word of your poems to datamuse.com. Results are cached so each word is only looked up once
 - Rhymes and near rhymes. Click one to put it in your poem where the cursor was
 - Dictionary look-up with meanings and examples
-- Reference image, audio or video for each poem, stored in the browser (IndexedDB, 50 MB each)
+- Reference image or video for each poem, stored in the browser (IndexedDB, 50 MB each)
 - Download a poem as `.txt`, download them all, or print or save as PDF
 - Deleting asks first
 - Keyboard: <kbd>Alt</kbd>+<kbd>N</kbd> new poem, <kbd>Alt</kbd>+<kbd>L</kbd> look up, <kbd>Alt</kbd>+<kbd>R</kbd> rhymes, <kbd>Ctrl</kbd>+<kbd>S</kbd> download
@@ -43,4 +43,4 @@ Neither needs a key. Looking up a word or finding rhymes sends only that word. Y
 
 ## Hosting
 
-Static files only. `CNAME` is set for GitHub Pages.
+Static files only.
