@@ -20,6 +20,7 @@
     var datamuseToggle = document.getElementById('datamuseSyllables');
 
     var poems = loadPoems();
+    var syncedPoems = snapshot(poems);
     var activeId = poems.length ? poems[0].id : null;
     var activeCaret = null;
     var syllableCache = ui.get(SYLLABLE_CACHE_KEY, {});
@@ -31,11 +32,7 @@
 
     function loadPoems() {
         var saved = ui.get(POEMS_KEY, null);
-        if (Array.isArray(saved)) {
-            return saved.filter(function (p) { return p && typeof p.id === 'string'; }).map(function (p) {
-                return { id: p.id, title: String(p.title || ''), content: String(p.content || ''), updated: p.updated || Date.now(), hasMedia: !!p.hasMedia };
-            });
-        }
+        if (Array.isArray(saved)) return PoemSync.normalise(saved);
         var legacy = ui.get(LEGACY_KEY, null);
         if (Array.isArray(legacy) && legacy.length) {
             var migrated = legacy.map(function (item) {
@@ -49,15 +46,42 @@
         return [];
     }
 
+    function snapshot(list) {
+        return list.map(function (p) { return Object.assign({}, p); });
+    }
+
+    function readStoredPoems() {
+        return PoemSync.normalise(ui.get(POEMS_KEY, []));
+    }
+
     var saveTimer = null;
     function savePoems(now) {
         clearTimeout(saveTimer);
         var write = function () {
-            if (!ui.set(POEMS_KEY, poems)) ui.toast('Your browser would not save. Download your poems so nothing is lost.');
+            var merged = PoemSync.merge(readStoredPoems(), poems, syncedPoems);
+            if (!ui.set(POEMS_KEY, merged)) {
+                ui.toast('Your browser would not save. Download your poems so nothing is lost.');
+                return;
+            }
+            syncedPoems = snapshot(merged);
+            adoptPoems(merged);
         };
         if (now) write(); else saveTimer = setTimeout(write, 400);
     }
-    window.addEventListener('beforeunload', function () { savePoems(true); });
+
+    function hasUnsavedEdits() {
+        return !PoemSync.same(poems, syncedPoems);
+    }
+
+    window.addEventListener('beforeunload', function () { if (hasUnsavedEdits()) savePoems(true); });
+
+    window.addEventListener('storage', function (event) {
+        if (event.key !== POEMS_KEY) return;
+        var stored = readStoredPoems();
+        var merged = PoemSync.merge(stored, poems, syncedPoems);
+        syncedPoems = snapshot(stored);
+        adoptPoems(merged);
+    });
 
     var media = (function () {
         var opening = null;
@@ -415,6 +439,30 @@
         askDatamuse = on;
         ui.set(DATAMUSE_SYLLABLES_KEY, on);
         scheduleAllStats();
+    }
+
+    function adoptPoems(merged) {
+        if (PoemSync.same(merged, poems)) return;
+        poems = merged;
+        if (!poems.length) poems.push(blankPoem());
+        if (!poems.some(function (p) { return p.id === activeId; })) activeId = poems[0].id;
+        renderKeepingFocus();
+    }
+
+    function renderKeepingFocus() {
+        var focused = document.activeElement;
+        var isPoemField = focused && focused.matches && focused.matches('.poem-title, .poem-body');
+        if (!isPoemField) { renderAll(); return; }
+        var id = focused.closest('.poem').dataset.id;
+        var selector = focused.classList.contains('poem-title') ? '.poem-title' : '.poem-body';
+        var start = focused.selectionStart;
+        var end = focused.selectionEnd;
+        renderAll();
+        var card = poemsBox.querySelector('[data-id="' + id + '"]');
+        var field = card && card.querySelector(selector);
+        if (!field) return;
+        field.focus();
+        field.setSelectionRange(start, end);
     }
 
     function addPoem() {

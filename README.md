@@ -32,12 +32,14 @@ Neither needs a key. Looking up a word or finding rhymes sends only that word. Y
 | `index.html` | The page |
 | `assets/syllables.js` | Syllable estimator and line stats, also loadable in Node |
 | `assets/rhymes.js` | Rhyme matching and rhyme scheme, also loadable in Node |
+| `assets/poemsync.js` | Merges poems saved by other open tabs, also loadable in Node |
 | `assets/app.js` | Poems, tools, storage and shortcuts |
 | `assets/app.css` | Layout for this tool |
 | `assets/theme.css`, `assets/ui.js` | Shared drew-gnr.xyz look and helpers |
 | `assets/fonts/` | IBM Plex, self-hosted (SIL OFL, see `OFL.txt`) |
 | `tests/syllables.test.js` | `node tests/syllables.test.js` |
 | `tests/rhymes.test.js` | `node tests/rhymes.test.js` |
+| `tests/poemsync.test.js` | `node tests/poemsync.test.js` |
 
 ## Hosting
 
