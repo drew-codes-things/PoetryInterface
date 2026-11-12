@@ -637,6 +637,7 @@
     });
 
     document.addEventListener('keydown', function (event) {
+        if (typeof event.key !== 'string') return;
         var key = event.key.toLowerCase();
         if (event.altKey && !event.ctrlKey && !event.metaKey) {
             if (key === 'n') { event.preventDefault(); addPoem(); }
