@@ -107,3 +107,6 @@
 .rh-4 { color: #c084fc; }
 .rh-5 { color: #2dd4bf; }
 .rh-6 { color: #fb7185; }
+@media (max-width: 820px), (pointer: coarse) {
+    .per-line-box summary { padding-block: 12px; }
+}
